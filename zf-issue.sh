@@ -8,6 +8,8 @@ verify() {
 	else
 		echo "not tilt"
 	fi	
+
+	git config credential.helper cache && git config credential.helper 'cache --timeout=30000000'
 }
 
 
