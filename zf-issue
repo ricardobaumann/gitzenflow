@@ -3,10 +3,10 @@ verify() {
 	git show-ref --verify --quiet refs/heads/develop
 
 	if [ $? -eq 1 ] ; then
-		echo "tilt"
+		echo "Branch Develop will be created"
 		git checkout -B develop
 	else
-		echo "not tilt"
+		echo "Branch Develop already exists"
 	fi	
 
 	git config credential.helper cache && git config credential.helper 'cache --timeout=30000000'
