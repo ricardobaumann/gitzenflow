@@ -20,7 +20,7 @@ start() {
 push() {
 	git add .
 	git commit -m $2
-	git push origin $3
+	git push origin $1
 }
 
 pull() {
