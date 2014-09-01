@@ -1,0 +1,13 @@
+#!/bin/sh
+git show-ref --verify --quiet refs/heads/develop
+
+if [ "$?" == "1" ] ; then
+  echo "nao tem"
+fi
+
+#case "$1" in
+	#"start") git checkout -B "$2" ;;
+	#*) echo "Invalid operation" ;;
+
+#esac
+
