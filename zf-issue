@@ -31,7 +31,8 @@ push() {
 	    exit 1
 	fi
 	git add -A .
-	git commit -m "$2"
+	eval m = "$2"
+	git commit -m m
 	git push origin $1
 }
 
