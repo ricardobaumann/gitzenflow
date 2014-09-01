@@ -18,14 +18,12 @@ start() {
 }
 
 push() {
-	verify
 	git add .
-	git commit -m $1
+	git commit -m $2
+	git push origin $3
 }
 
 pull() {
-	verify()
-	#echo "The changes of $2 will be pulled from remote repository"
 	git pull origin $2
 }
 
