@@ -32,8 +32,8 @@ push() {
 	fi
 	git add -A .
 	echo "$@"
-	echo "git commit -m $@"
-	git commit -m "$2"
+	echo "git commit -m '$@'"
+	git commit -m "'$@'"
 	git push origin $1
 }
 
