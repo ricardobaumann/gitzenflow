@@ -14,18 +14,33 @@ verify() {
 
 
 start() {
+	if [ -z "$1" ]
+	  then
+	    echo "The issue branch name must be informed. Use zf-issue start <issue>"
+	    exit 1
+	fi
 	verify
 	git fetch && git checkout develop
 	git checkout -B $1
 }
 
 push() {
-	git add .
+	if [ -z "$1" ] || [ -z "$2" ]
+	  then
+	    echo "The issue branch name and the commit message must be informed. Use zf-issue push <issue> <message>"
+	    exit 1
+	fi
+	git add -A .
 	git commit -m $2
 	git push origin $1
 }
 
 pull() {
+	if [ -z "$1" ]
+	  then
+	    echo "The issue branch name must be informed. Use zf-issue pull <issue>"
+	    exit 1
+	fi
 	git pull origin $2
 }
 
