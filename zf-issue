@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/bin/bash
 verify() {
 	git show-ref --verify --quiet refs/heads/develop
 
@@ -25,23 +25,15 @@ start() {
 }
 
 push() {
-	if [ -z "$1" ] || [ -z "$2" ]
-	  then
-	    echo "The issue branch name and the commit message must be informed. Use zf-issue push <issue> <message>"
+	if [ -z "$1" ] || [ -z "$2" ] ; then
+	    echo "The issue branch name and the commit message must be informed. Use zf-issue push <issue> <text>"
 	    exit 1
 	fi
 	git add -A .
-	message=""
-    for a in "$@" # Loop over arguments
-    do
-        
-        if [[ "$message" != "" ]]
-        then
-            message+="_" # Delimeter
-        fi
-        message+="$a"
-        
-    done
+	
+	message=$(echo "$@" | sed 's/ /_/g')
+    
+    #echo "$message"
 	git commit -m "$message"
 	git push origin $1
 }
