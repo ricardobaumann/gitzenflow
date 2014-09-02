@@ -38,6 +38,26 @@ push() {
 	git push origin $1
 }
 
+switch() {
+	if [ -z "$1" ]
+	  then
+	    echo "The branch name must be informed. Use zf-issue switch <branch>"
+	    exit 1
+	fi
+	git fetch && git checkout $1
+}
+
+merge() {
+	if [ -z "$1" ] || [ -z "$2" ] ; then
+	    echo "The branch names to merge must be informed. Use zf-merge merge <origin_branch> <target_branch>"
+	    exit 1
+	fi
+	git checkout $2
+	git merge $1
+	git push origin $2
+	git fetch && git checkout $1
+}
+
 pull() {
 	if [ -z "$1" ]
 	  then
