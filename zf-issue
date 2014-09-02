@@ -49,13 +49,28 @@ switch() {
 
 merge() {
 	if [ -z "$1" ] || [ -z "$2" ] ; then
-	    echo "The branch names to merge must be informed. Use zf-merge merge <origin_branch> <target_branch>"
+	    echo "The branch names to merge must be informed. Use zf-issue merge <origin_branch> <target_branch>"
 	    exit 1
 	fi
 	git checkout $2
 	git merge $1
 	git push origin $2
 	git fetch && git checkout $1
+}
+
+release() {
+	if [ -z "$1" ] || [ -z "$2" ] ; then
+	    echo "The tag name and description be informed. Use zf-issue release <tag_name> <tag_description>"
+	    exit 1
+	fi
+	git fetch && git checkout develop
+	git checkout master
+	git merge develop
+	git push origin master
+	message=$(echo "$@")
+	git tag -a $1 -m "$message"
+	git push --tags
+	git fetch && git checkout develop
 }
 
 pull() {
