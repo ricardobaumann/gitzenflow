@@ -31,7 +31,7 @@ push() {
 	fi
 	git add -A .
 	
-	message=$(echo "$@" | sed 's/ /_/g')
+	message=$(echo "$@")
     
     #echo "$message"
 	git commit -m "$message"
