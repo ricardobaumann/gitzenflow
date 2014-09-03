@@ -21,7 +21,7 @@ start() {
 	fi
 	verify
 	git fetch && git checkout develop
-	git checkout -B $1
+	git checkout -B issue/$1
 }
 
 push() {
@@ -35,25 +35,25 @@ push() {
     
     #echo "$message"
 	git commit -m "$message"
-	git push origin $1
+	git push origin issue/$1
 }
 
 switch() {
 	if [ -z "$1" ]
 	  then
-	    echo "The branch name must be informed. Use zf-issue switch <branch>"
+	    echo "The branch name must be informed. Use zf-issue switch <issue>"
 	    exit 1
 	fi
-	git fetch && git checkout $1
+	git fetch && git checkout issue/$1
 }
 
 merge() {
 	if [ -z "$1" ] ; then
-	    echo "The branch name to merge must be informed. Use zf-issue merge <origin_branch>"
+	    echo "The branch name to merge must be informed. Use zf-issue merge <issue>"
 	    exit 1
 	fi
 	git checkout develop
-	git merge $1
+	git merge issue/$1
 	git push origin develop
 	git fetch && git checkout develop
 }
@@ -79,7 +79,7 @@ pull() {
 	    echo "The issue branch name must be informed. Use zf-issue pull <issue>"
 	    exit 1
 	fi
-	git pull origin $2
+	git pull origin issue/$2
 }
 
 $@
