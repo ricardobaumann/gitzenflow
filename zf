@@ -16,7 +16,7 @@ verify() {
 start() {
 	if [ -z "$1" ]
 	  then
-	    echo "The issue branch name must be informed. Use zf-issue start <issue>"
+	    echo "The issue branch name must be informed. Use zf start <issue>"
 	    exit 1
 	fi
 	verify
@@ -26,7 +26,7 @@ start() {
 
 push() {
 	if [ -z "$1" ] || [ -z "$2" ] ; then
-	    echo "The issue branch name and the commit message must be informed. Use zf-issue push <issue> <text>"
+	    echo "The issue branch name and the commit message must be informed. Use zf push <issue> <text>"
 	    exit 1
 	fi
 	git add -A .
@@ -41,7 +41,7 @@ push() {
 switch() {
 	if [ -z "$1" ]
 	  then
-	    echo "The branch name must be informed. Use zf-issue switch <issue>"
+	    echo "The branch name must be informed. Use zf switch <issue>"
 	    exit 1
 	fi
 	git fetch && git checkout issue/$1
@@ -49,7 +49,7 @@ switch() {
 
 merge() {
 	if [ -z "$1" ] ; then
-	    echo "The branch name to merge must be informed. Use zf-issue merge <issue>"
+	    echo "The branch name to merge must be informed. Use zf merge <issue>"
 	    exit 1
 	fi
 	git checkout develop
@@ -57,11 +57,12 @@ merge() {
 	git push origin develop
 	git fetch && git checkout develop
 	git pull origin develop
+	echo "Your branch was merged to develop. You are now on develop"
 }
 
 release() {
 	if [ -z "$1" ] || [ -z "$2" ] ; then
-	    echo "The tag name and description be informed. Use zf-issue release <tag_name> <tag_description>"
+	    echo "The tag name and description be informed. Use zf release <tag_name> <tag_description>"
 	    exit 1
 	fi
 	git fetch && git checkout develop
@@ -71,13 +72,20 @@ release() {
 	message=$(echo "$@")
 	git tag -a $1 -m "$message"
 	git push --tags
-	git fetch && git checkout develop
+	git fetch && git checkout master
+	git branch -D develop
+	git checkout -B develop
+	echo "Summary: "
+	echo "-- Branch develop was merged into master"
+	echo "-- A tag was pushed with name $1"
+	echo "-- The branch Develop was recreated based on master"
+	echo "-- You are now on develop"
 }
 
 pull() {
 	if [ -z "$1" ]
 	  then
-	    echo "The issue branch name must be informed. Use zf-issue pull <issue>"
+	    echo "The issue branch name must be informed. Use zf pull <issue>"
 	    exit 1
 	fi
 	git pull origin issue/$2
